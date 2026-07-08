@@ -1,0 +1,30 @@
+services:
+
+  postgres:
+
+    image: postgres:17
+
+    container_name: shopsphere-postgres
+
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: shopsphere_admin
+      POSTGRES_PASSWORD: shopsphere_password
+      POSTGRES_DB: shopsphere
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ../database:/docker-entrypoint-initdb.d
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U shopsphere_admin -d shopsphere"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
