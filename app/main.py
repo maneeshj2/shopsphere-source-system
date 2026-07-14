@@ -4,6 +4,7 @@ from app.api.customers import router as customer_router
 from app.api.health import router as health_router
 from app.db.base import Base
 from app.db.database import engine
+from app.api.categories import router as category_router
 
 # Import all models
 from app.models import *
@@ -17,3 +18,4 @@ app = FastAPI(
 
 app.include_router(health_router)
 app.include_router(customer_router)
+app.include_router(category_router)
