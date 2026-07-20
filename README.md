@@ -1,83 +1,100 @@
 # 🛍️ ShopSphere Source System
 
-> An enterprise-grade e-commerce source system built using **FastAPI**, **PostgreSQL**, **Docker**, and **Python** to simulate a real-world OLTP application for Data Engineering.
+> An e-commerce transactional source system built with **FastAPI**, **PostgreSQL**, **SQLAlchemy**, and **Alembic** to simulate a production-ready OLTP application.
 
 ---
 
-# 📖 Project Overview
+# 📖 Overview
 
-ShopSphere is designed to mimic how modern e-commerce companies expose transactional data through REST APIs.
+ShopSphere is a REST API-based transactional application designed to act as the **source system** for an end-to-end Data Engineering platform.
 
-Instead of connecting directly to the production database, downstream data engineering systems consume data through APIs, making the architecture more secure, scalable, and loosely coupled.
+The application manages customers, products, categories, brands, and orders while exposing data through REST APIs. Instead of allowing direct database access, downstream systems consume data through APIs, closely mirroring how modern enterprise applications integrate with Data Engineering platforms.
 
-This project will eventually demonstrate the complete data journey:
+This repository focuses only on the **OLTP application**.
+
+The extraction, ingestion, transformation, and analytics pipeline are implemented in a separate repository.
+
+---
+
+# 🏗️ Architecture
 
 ```
-Customer
-    │
-    ▼
-FastAPI APIs
-    │
-    ▼
-PostgreSQL (OLTP)
-    │
-    ▼
-Python Extractor
-    │
-    ▼
-JSON Files
-    │
-    ▼
-S3 / MinIO
-    │
-    ▼
-Snowflake RAW
-    │
-    ▼
-dbt STAGING
-    │
-    ▼
-dbt MART
-    │
-    ▼
-Power BI / Tableau
+                  Client
+                     │
+                     ▼
+              FastAPI REST APIs
+                     │
+                     ▼
+             Service Layer
+                     │
+                     ▼
+           Repository Layer
+                     │
+                     ▼
+               PostgreSQL
 ```
 
 ---
 
-# 🎯 Project Goals
+# 🎯 Project Objectives
 
-- Learn Enterprise FastAPI Development
-- Build Production-Ready REST APIs
-- Design a Realistic OLTP Database
-- Implement Clean Architecture
-- Simulate Source Systems used by Data Engineering teams
-- Build a complete Data Pipeline into Snowflake
-
----
-
-# 🏗️ Technology Stack
-
-| Technology | Purpose |
-|------------|---------|
-| Python | Backend Development |
-| FastAPI | REST API Framework |
-| PostgreSQL | OLTP Database |
-| SQLAlchemy | Database Connectivity |
-| Docker | Infrastructure |
-| Pydantic | Request & Response Validation |
-| Alembic *(Later)* | Database Versioning |
-| Snowflake *(Later)* | Data Warehouse |
-| dbt *(Later)* | Data Transformation |
-| Airflow *(Later)* | Pipeline Orchestration |
+- Build a realistic transactional source system
+- Design a normalized OLTP database
+- Expose business entities through REST APIs
+- Follow a layered architecture
+- Simulate enterprise application development
+- Provide a reliable data source for downstream ETL pipelines
 
 ---
 
-# 📁 Project Structure
+# 🚀 Features
+
+## Customer Management
+
+- Create Customer
+- Retrieve Customer
+- Update Customer
+- Soft Delete Customer
+
+## Brand Management
+
+- Create Brand
+- Retrieve Brand
+- Update Brand
+- Soft Delete Brand
+
+## Category Management
+
+- Create Category
+- Retrieve Category
+- Update Category
+- Soft Delete Category
+
+## Product Management
+
+- Create Product
+- Product Catalog
+- Brand & Category Relationships
+- Inventory Quantity Tracking
+- Soft Delete Product
+
+## Order Management
+
+- Create Orders
+- Multiple Order Items
+- Automatic Order Total Calculation
+- Stock Deduction
+- Order History
+
+---
+
+# 🏛️ Project Structure
 
 ```
 shopsphere-source-system/
 
+├── alembic/
+│
 ├── app/
 │   ├── api/
 │   ├── core/
@@ -88,161 +105,111 @@ shopsphere-source-system/
 │   ├── services/
 │   └── utils/
 │
-├── database/
-│   ├── schema/
-│   ├── seed/
-│   └── init.sql
-│
-├── docker/
-├── docs/
-├── learning/
-├── tests/
-│
 ├── requirements.txt
+├── .env.example
 └── README.md
 ```
 
 ---
 
-# 📚 Architecture
+# 🧩 Technology Stack
+
+| Technology | Purpose |
+|------------|---------|
+| Python | Backend Development |
+| FastAPI | REST API Framework |
+| PostgreSQL | OLTP Database |
+| SQLAlchemy | ORM |
+| Alembic | Database Migrations |
+| Pydantic | Request & Response Validation |
+| Docker | Local Development Environment |
+
+---
+
+# 📐 Design Principles
+
+The project follows common enterprise backend practices:
+
+- Layered Architecture
+- Repository Pattern
+- Service Layer Pattern
+- Separation of Concerns
+- Modular Design
+- Reusable Components
+- API-First Development
+- Database Migrations with Alembic
+
+---
+
+# 🔄 Data Flow
 
 ```
                 Client
-
                    │
-
                    ▼
-
-          FastAPI Router Layer
-
+           FastAPI REST APIs
                    │
-
                    ▼
-
-           Service Layer
-
+            Business Logic
                    │
-
                    ▼
-
-         Repository Layer
-
+            Repository Layer
                    │
-
                    ▼
-
-            PostgreSQL
+              PostgreSQL
 ```
 
 ---
 
-# 🧩 Design Principles
+# 📊 Current Status
 
-This project follows several enterprise software engineering principles:
+### Core Infrastructure
 
-- Separation of Concerns
-- Layered Architecture
-- Single Responsibility Principle
-- API First Design
-- Clean Code
-- Modular Development
-- Reusable Components
+- ✅ FastAPI
+- ✅ PostgreSQL
+- ✅ SQLAlchemy
+- ✅ Alembic
+- ✅ Docker
+- ✅ Layered Architecture
 
----
+### Business Modules
 
-# 🚀 Features
+- ✅ Customer
+- ✅ Brand
+- ✅ Category
+- ✅ Product
+- ✅ Order
 
-### Customer Module
+### Business Logic
 
-- Customer Registration
-- Customer Lookup
-- Customer Update
-- Soft Delete
-
-### Product Module *(Upcoming)*
-
-- Product Catalog
-- Categories
-- Brands
-- Suppliers
-
-### Order Module *(Upcoming)*
-
-- Shopping Cart
-- Orders
-- Payments
-- Shipments
-
-### Inventory Module *(Upcoming)*
-
-- Warehouses
-- Inventory Tracking
-- Stock Movement
+- ✅ Inventory Management
+- ✅ Order Total Calculation
+- ✅ Product Relationships
+- ✅ Pagination
+- ✅ Input Validation
+- ✅ Error Handling
 
 ---
 
-# 📖 Documentation
+# 🔗 Related Project
 
-Each folder contains its own `README.md` explaining:
+This application acts as the source system for the **ShopSphere Data Engineering Platform**, where data is extracted through REST APIs and loaded into a modern analytics stack.
 
-- Purpose
-- Responsibilities
-- Best Practices
-- Folder Contents
-- Common Mistakes
-- Interview Notes
+The downstream platform includes:
 
----
-
-# 🎓 Learning Notes
-
-The `learning/` folder contains topic-wise notes on:
-
-- Docker
-- PostgreSQL
-- FastAPI
-- REST APIs
-- SQLAlchemy
-- Pydantic
-- Service Layer
-- Repository Pattern
-- System Design
+- Python ETL
+- REST API Client
+- Parquet Landing Layer
+- Snowflake
+- dbt
+- Power BI
 
 ---
 
-# 💼 Interview Preparation
-
-This repository is also intended to serve as interview preparation material.
-
-Each module contains:
-
-- Architecture Discussion
-- Best Practices
-- Enterprise Examples
-- Common Interview Questions
-- Design Decisions
-
----
-
-# 👨‍💻 Current Progress
-
-- ✅ Docker Setup
-- ✅ PostgreSQL Setup
-- ✅ FastAPI Setup
-- ✅ Health Check API
-- ✅ Customer API Skeleton
-- ⏳ Customer Database Integration
-- ⏳ Repository Layer
-- ⏳ Authentication
-- ⏳ Product Module
-- ⏳ Order Module
-
----
-
-# 📌 Author
+# 👨‍💻 Author
 
 **Maneesh Joshi**
 
 Senior Data Engineer
 
-Learning Backend Engineering through a real-world enterprise project.
+Building production-style Data Engineering projects from source system to analytics.
