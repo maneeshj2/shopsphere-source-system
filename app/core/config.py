@@ -1,15 +1,13 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    DATABASE_URL: str
 
-    DATABASE_URL: str = (
-        "postgresql://shopsphere_admin:"
-        "shopsphere_password@localhost:5432/shopsphere"
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        extra="ignore",
     )
-
-    class Config:
-        env_file = ".env"
 
 
 settings = Settings()

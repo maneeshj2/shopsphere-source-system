@@ -14,3 +14,5 @@ alembic==1.16.4
 pytest==8.4.1
 
 httpx==0.28.1
+pydantic[email]
+bcrypt
